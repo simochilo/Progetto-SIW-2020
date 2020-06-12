@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class Project {
 	@Column(nullable = false, length = 100)
 	private String name;
 	
-	@Column
-	private String description;
+	@Column(nullable = false)
+	private LocalDateTime startingDate;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private User owner;
@@ -45,11 +46,11 @@ public class Project {
 		this.tasks = new ArrayList<Task>();
 	}
 
-	public Project(String name, String description) {
+	public Project(String name) {
 		this.members = new ArrayList<User>();
 		this.tasks = new ArrayList<Task>();
 		this.name = name;
-		this.description = description;
+		this.startingDate = LocalDateTime.now();
 	}
 
 	public Long getId() {
@@ -68,14 +69,6 @@ public class Project {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public User getOwner() {
 		return owner;
 	}
@@ -90,6 +83,14 @@ public class Project {
 
 	public void setMembers(List<User> members) {
 		this.members = members;
+	}
+
+	public LocalDateTime getDataInizio() {
+		return startingDate;
+	}
+
+	public void setDataInizio(LocalDateTime dataInizio) {
+		this.startingDate = dataInizio;
 	}
 
 	public List<Task> getTasks() {

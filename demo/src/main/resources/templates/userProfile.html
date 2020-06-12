@@ -11,15 +11,15 @@
     <table>
         <tr>
             <td>Username</td>
-            <td th:text="${credentials.userName}">...</td>
+            <td th:text="${credentials.username}">...</td>
         </tr>
         <tr>
             <td>First Name</td>
-            <td th:text="${user.firstName}">...</td>
+            <td th:text="${user.firstname}">...</td>
         </tr>
         <tr>
             <td>Last Name</td>
-            <td th:text="${user.lastName}">...</td>
+            <td th:text="${user.lastname}">...</td>
         </tr>
         <tr>
             <td>Role</td>
@@ -27,12 +27,10 @@
         </tr>
         <tr>
             <td>Registered at: </td>
-            <td th:text="${user.creationTimestamp}">...</td>
+            <td th:text="${credentials.creationDate}">...</td>
         </tr>
-        <tr>
-            <td>Last Update at:</td>
-            <td th:text="${user.lastUpdateTimestamp}">...</td>
-        </tr>
+
     </table>
+    <h4><a href="/users/me/edit">Edit Profile</a></h4>
 </body>
 </html>

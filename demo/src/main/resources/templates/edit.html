@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head>
+<title>TaskManager</title>
+</head>
+<body>
+	<form th:action="@{/login}" method="post">
+		<table>
+			<tr>
+				<td><label for="userNameInput"> Username </label></td>
+				<td><input id=userNameInput type="text" placeholder="USERNAME"
+					required th:field="${credentialsForm.username}" /></td>
+				<td th:if="${#fields.hasErrors('credentialsForm.username')}"
+					th:errors="${credentialsForm.username}" th:style="'color:red'">
+				</td>
+			</tr>
+			<tr>
+				<td><label for="passwordInput"> Password </label>
+				<td><input id=passwordInput type="text" placeholder="PASSWORD"
+					required th:field="${credentialsForm.password}" /></td>
+				<td th:if="${#fields.hasErrors('credentialsForm.password')}"
+					th:errors="${credentialsForm.password}" th:style="'color:red'">
+				</td>
+			</tr>
+		</table>
+		<input type="submit" value="Edit" />
+	</form>
+</body>
+</html>

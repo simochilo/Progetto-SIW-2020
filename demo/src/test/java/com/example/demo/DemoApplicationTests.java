@@ -68,19 +68,17 @@ class DemoApplicationTests {
 		Assert.assertEquals(user2.getLastname(), "bianchi");
 		
 		//save first project in the database
-		Project project1 = new Project("TestProject1", "just a little test project");
+		Project project1 = new Project("TestProject1");
 		project1.setOwner(user1);
 		project1 = projectService.saveProject(project1);
 		Assert.assertEquals(project1.getOwner(), user1);
-		Assert.assertEquals(project1.getDescription(), "just a little test project");
 		Assert.assertEquals(project1.getName(), "TestProject1");
 		
 		//save second project in the database
-		Project project2 = new Project("TestProject2", "just a little test project");
+		Project project2 = new Project("TestProject2");
 		project2.setOwner(user1);
 		project2 = projectService.saveProject(project2);
 		Assert.assertEquals(project2.getOwner(), user1);
-		Assert.assertEquals(project2.getDescription(), "just a little test project");
 		Assert.assertEquals(project2.getName(), "TestProject2");
 		
 		//give visibility to user2 over project1
