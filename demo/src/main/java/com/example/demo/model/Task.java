@@ -1,12 +1,15 @@
 package com.example.demo.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -33,6 +36,14 @@ public class Task {
 	
 	@Column(nullable = false)
 	private LocalDateTime lastUpdateTimestamp;
+	
+	@ManyToOne
+	private Project project;
+	
+	
+
+	@ManyToMany
+	private List<Tag> tags;
 	
 	public Task() {}
 
@@ -99,6 +110,26 @@ public class Task {
 	@PreUpdate
 	protected void onUpdate() {
 		this.lastUpdateTimestamp = LocalDateTime.now();
+	}
+	
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+	
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+	
+	public void addTag(Tag tag) {
+		this.tags.add(tag);
 	}
 
 }

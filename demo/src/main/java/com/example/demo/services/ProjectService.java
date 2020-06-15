@@ -40,8 +40,11 @@ public class ProjectService {
 	}
 
 	public List<Project> retrieveProjectsOwnedBy(User loggedUser) {
-		// TODO Auto-generated method stub
-		return null;
+		return loggedUser.getOwnedProjects();
+	}
+
+	public List<Project> retrieveProjectsSharedWith(User loggedUser) {
+		return loggedUser.getVisibleProjects();
 	}
 
 }

@@ -41,7 +41,16 @@ public class ProjectController {
 		List<Project> projectsList = projectService.retrieveProjectsOwnedBy(loggedUser);
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("projectsList", projectsList);
-		return "myOwnedProjects";
+		return "projects";
+	}
+	
+	@RequestMapping(value = {"/sharedProjects" }, method = RequestMethod.GET)
+	public String projectsSharedWithMe(Model model) {
+		User loggedUser = sessionData.getLoggedUser();
+		List<Project> projectsList = projectService.retrieveProjectsSharedWith(loggedUser);
+		model.addAttribute("loggedUser", loggedUser);
+		model.addAttribute("projectsList", projectsList);
+		return "sharedprojects";
 	}
 	
 	@RequestMapping(value = { "/projects/{projectId}" }, method = RequestMethod.GET)
@@ -64,8 +73,9 @@ public class ProjectController {
 	@RequestMapping(value = { "/projects/add" }, method = RequestMethod.GET)
 	public String createProjectForm(Model model) {
 		User loggedUser = sessionData.getLoggedUser();
+		Project project = new Project();
 		model.addAttribute("loggedUser", loggedUser);
-		model.addAttribute("projectForm", new Project());
+		model.addAttribute("projectForm", project);
 		return "addProject";
 	}
 

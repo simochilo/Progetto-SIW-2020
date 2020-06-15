@@ -1,16 +1,20 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.demo.controller.session.SessionData;
 import com.example.demo.model.Credentials;
 import com.example.demo.model.User;
+import com.example.demo.repository.CredentialsRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.services.CredentialsService;
 import com.example.demo.services.UserService;
@@ -36,6 +40,9 @@ public class UserController {
     
     @Autowired
     UserService userService;
+    
+    @Autowired
+    CredentialsRepository credentialsRepository;
 
     /**
      * This method is called when a GET request is sent by the user to URL "/users/user_id".
@@ -91,11 +98,28 @@ public class UserController {
     
     @RequestMapping(value = { "/users/me/edit" }, method = RequestMethod.POST)
     public String edit(@ModelAttribute("user") User user,
-    				   @ModelAttribute("credentials") Credentials credentials,
     				   Model model) {
-    	credentials.setUser(user);
-		credentialsService.saveCredentials(credentials);
+    	User loggedUser = sessionData.getLoggedUser();
+    	loggedUser.setFirstname(user.getFirstname());
+    	loggedUser.setLastname(user.getLastname());
+    	userRepository.save(loggedUser);
         return "home";
+    }
+    
+    @RequestMapping(value =  { "/admin/users" } , method = RequestMethod.GET)
+    public String usersList(Model model) {
+    	List<Credentials> allCredentials = this.credentialsService.getAllCredentials();
+    	model.addAttribute("credentialsList", allCredentials);
+    	return "allUsers";
+    }
+    
+    @RequestMapping(value = { "admin/delete/{credentials.username}" })
+    public String deleteUser(@PathVariable(name = "username") String username) {
+    	Credentials credentials = this.credentialsRepository.findByUsername(username).get();
+    	User user = credentials.getUser();
+    	this.userRepository.delete(user);
+    	this.credentialsRepository.delete(credentials);
+    	return "redirect:/admin/users";
     }
 
 }

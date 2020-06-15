@@ -8,20 +8,6 @@
 	<form th:action="@{/users/me/edit}" method="POST">
 		<table>
 			<tr>
-				<td><label for="userNameInput"> Username </label></td>
-				<td><input id=userNameInput type="text" placeholder="USERNAME"
-					required th:field="${credentials.username}" /></td>
-				<td th:if="${#fields.hasErrors('credentials.username')}"
-					th:errors="${credentials.username}" th:style="'color:red'"></td>
-			</tr>
-			<tr>
-				<td><label for="passwordInput"> Password </label>
-				<td><input id=passwordInput type="text" placeholder="PASSWORD"
-					required th:field="${credentials.password}" /></td>
-				<td th:if="${#fields.hasErrors('credentials.password')}"
-					th:errors="${credentials.password}" th:style="'color:red'"></td>
-			</tr>
-			<tr>
 				<td><label for="firstNameInput"> First Name </label>
 				<td><input id=firstNameInput type="text"
 					placeholder="FIRST NAME" required th:field="${user.firstname}" /></td>

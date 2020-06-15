@@ -28,6 +28,9 @@ public class Project {
 	@Column(nullable = false, length = 100)
 	private String name;
 	
+	@Column(length = 100)
+	private String description;
+	
 	@Column(nullable = false)
 	private LocalDateTime startingDate;
 	
@@ -37,13 +40,17 @@ public class Project {
 	@ManyToMany
 	private List<User> members;
 	
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-	@JoinColumn(name = "project_id")
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "project")
 	private List<Task> tasks;
+	
+	@OneToMany(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "project_id")
+	private List<Tag> tags;
 	
 	public Project() {
 		this.members = new ArrayList<User>();
 		this.tasks = new ArrayList<Task>();
+		this.startingDate = LocalDateTime.now();
 	}
 
 	public Project(String name) {
@@ -85,14 +92,6 @@ public class Project {
 		this.members = members;
 	}
 
-	public LocalDateTime getDataInizio() {
-		return startingDate;
-	}
-
-	public void setDataInizio(LocalDateTime dataInizio) {
-		this.startingDate = dataInizio;
-	}
-
 	public List<Task> getTasks() {
 		return tasks;
 	}
@@ -101,8 +100,36 @@ public class Project {
 		this.tasks = tasks;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public LocalDateTime getStartingDate() {
+		return startingDate;
+	}
+
+	public void setStartingDate(LocalDateTime startingDate) {
+		this.startingDate = startingDate;
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+	
 	public void addMember(User member) {
 		this.members.add(member);
+	}
+	
+	public void addTag(Tag tag) {
+		this.tags.add(tag);
 	}
 
 	@Override

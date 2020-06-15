@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>TaskManager</title>
+</head>
+<body>
+	<h1>All Users</h1>
+	<div>
+		<table class="table table-responsive">
+			<thead>
+				<tr>
+					<th>Username</th>
+					<th>First name</th>
+					<th>Last name</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="credentials : ${credentialsList}">
+					<td th:text="${credentials.username}"></td>
+					<td th:text="${credentials.user.firstname}"></td>
+					<td th:text="${credentials.user.lastname}"></td>
+					<td>
+						<a th:href="@{delete/__${credentials.username}__}" class="btn btn-danger">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
