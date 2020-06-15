@@ -21,28 +21,32 @@ public class AuthConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	DataSource datasource;
 	
+	/**
+	 * The method configure defines which URL path should be secured
+	 * and which should not (e.g. "/","home" shouldn't be secured)
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.authorizeRequests()
-				.antMatchers(HttpMethod.GET, "/", "/index", "/login", "/users/register").permitAll()
+				.antMatchers(HttpMethod.GET, "/", "/index", "/login", "/users/register").permitAll()	// these paths can be accessed by anyone
 				.antMatchers(HttpMethod.POST, "/login", "/users/register").permitAll()
-				.antMatchers(HttpMethod.GET, "admin/**").hasAnyAuthority(ADMIN_ROLE) 
+				.antMatchers(HttpMethod.GET, "admin/**").hasAnyAuthority(ADMIN_ROLE) 		// the path admin/** is accessible only by an user with ADMIN_ROLE
 				.antMatchers(HttpMethod.POST, "admin/**").hasAnyAuthority(ADMIN_ROLE) 
-				.anyRequest().authenticated()
+				.anyRequest().authenticated()		// URLs are allowed by any authenticated user
 				.and().formLogin()
 				.defaultSuccessUrl("/home")
 				.and().logout()
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/index")
 				.invalidateHttpSession(true)
-				.clearAuthentication(true).permitAll();
+				.clearAuthentication(true).permitAll();		// operations executed after the logout
 	}
 	
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth	
-				.jdbcAuthentication()
+				.jdbcAuthentication()		// allows customization of the JDBC authentication
 				.dataSource(this.datasource)
 				.authoritiesByUsernameQuery("select username, role from credentials where username=?")
 				.usersByUsernameQuery("select username, password, 1 as enabled from credentials where username=?");
