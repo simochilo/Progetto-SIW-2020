@@ -20,8 +20,7 @@
 				<td><input id=lastNameInput type="text" placeholder="LAST NAME"
 					required th:field="${user.lastname}" /></td>
 				<td th:if="${#fields.hasErrors('user.lastname')}"
-					th:errors="${user.l
-					astname}" th:style="'color:red'"></td>
+					th:errors="${user.lastname}" th:style="'color:red'"></td>
 			</tr>
 		</table>
 		<input type="submit" value="Edit" />

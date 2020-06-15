@@ -118,7 +118,7 @@ public class UserController {
     	Credentials credentials = this.credentialsRepository.findByUsername(username).get();
     	User user = credentials.getUser();
     	this.userRepository.delete(user);
-    	this.credentialsRepository.delete(credentials);
+    	// this.credentialsRepository.delete(credentials);
     	return "redirect:/admin/users";
     }
 

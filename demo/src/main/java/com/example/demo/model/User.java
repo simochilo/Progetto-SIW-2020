@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,6 +42,8 @@ public class User {
 	public User(String firstName, String lastName) {
 		this.firstname = firstName;
 		this.lastname = lastName;
+		this.ownedProjects = new ArrayList<Project>();
+		this.visibleProjects = new ArrayList<Project>();
 	}
 
 	public Long getId() {
@@ -83,17 +86,11 @@ public class User {
 		this.visibleProjects = visibleProjects;
 	}
 
-
-
-
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstname
 				+ ", lastName=" + lastname + ", ownedProjects=" + ownedProjects + ", visibleProjects=" + visibleProjects;
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -125,7 +122,5 @@ public class User {
 			return false;
 		return true;
 	}
-
-
 
 }

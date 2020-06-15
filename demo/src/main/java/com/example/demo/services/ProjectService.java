@@ -17,6 +17,9 @@ public class ProjectService {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
+	@Autowired
+	private UserService userService;
+	
 	@Transactional
 	public Project getProject(Long id) {
 		Optional<Project> result = this.projectRepository.findById(id);
@@ -38,13 +41,17 @@ public class ProjectService {
 		project.addMember(user);
 		return this.projectRepository.save(project);
 	}
-
-	public List<Project> retrieveProjectsOwnedBy(User loggedUser) {
-		return loggedUser.getOwnedProjects();
+	
+	@Transactional
+	public List<Project> retrieveProjectsSharedWith(Long userId) {
+		User user = userService.getUser(userId);
+		return user.getVisibleProjects();
 	}
 
-	public List<Project> retrieveProjectsSharedWith(User loggedUser) {
-		return loggedUser.getVisibleProjects();
+	@Transactional
+	public List<Project> retrieveProjectsOwnedBy(Long userId) {
+		User user = userService.getUser(userId);
+		return user.getOwnedProjects();
 	}
-
+	
 }

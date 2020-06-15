@@ -38,7 +38,7 @@ public class ProjectController {
 	@RequestMapping(value = {"/projects" }, method = RequestMethod.GET)
 	public String myOwnedProjects(Model model) {
 		User loggedUser = sessionData.getLoggedUser();
-		List<Project> projectsList = projectService.retrieveProjectsOwnedBy(loggedUser);
+		List<Project> projectsList = projectService.retrieveProjectsOwnedBy(loggedUser.getId());
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("projectsList", projectsList);
 		return "projects";
@@ -47,7 +47,7 @@ public class ProjectController {
 	@RequestMapping(value = {"/sharedProjects" }, method = RequestMethod.GET)
 	public String projectsSharedWithMe(Model model) {
 		User loggedUser = sessionData.getLoggedUser();
-		List<Project> projectsList = projectService.retrieveProjectsSharedWith(loggedUser);
+		List<Project> projectsList = projectService.retrieveProjectsSharedWith(loggedUser.getId());
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("projectsList", projectsList);
 		return "sharedprojects";
@@ -87,10 +87,26 @@ public class ProjectController {
 		projectValidator.validate(project, projectBindingResult);
 		if(!projectBindingResult.hasErrors()) {
 			project.setOwner(loggedUser);
+			this.projectService.retrieveProjectsOwnedBy(loggedUser.getId()).add(project);
+			this.projectService.shareProjectWithUser(project, loggedUser);			
 			this.projectService.saveProject(project);
 			return "redirect:/projects/" + project.getId();
 		}
 		model.addAttribute("loggedUser", loggedUser);
 		return "addProject";
 	}
+	
+	@RequestMapping(value = { "/projects/edit/{projectId}" }, method = RequestMethod.GET)
+    public String showEditForm(Model model, @PathVariable Long projectId) {
+    	Project project = this.projectService.getProject(projectId);
+		model.addAttribute("projectForm", project);
+    	return "editProject";
+    }
+    
+    @RequestMapping(value = { "/projects/edit" }, method = RequestMethod.POST)
+    public String edit(@ModelAttribute("projectForm") Project projectForm,
+    					Model model) {
+    	projectService.saveProject(projectForm);
+        return "redirect:/projects";
+    }
 }
