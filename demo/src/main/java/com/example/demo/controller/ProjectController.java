@@ -99,14 +99,21 @@ public class ProjectController {
 	@RequestMapping(value = { "/projects/edit/{projectId}" }, method = RequestMethod.GET)
     public String showEditForm(Model model, @PathVariable Long projectId) {
     	Project project = this.projectService.getProject(projectId);
-		model.addAttribute("projectForm", project);
+		model.addAttribute("projectFormEdit", project);
+		System.out.println(project.getId());
     	return "editProject";
     }
     
     @RequestMapping(value = { "/projects/edit" }, method = RequestMethod.POST)
-    public String edit(@ModelAttribute("projectForm") Project projectForm,
+    public String edit(@Valid @ModelAttribute("projectFormEdit") Project project,
+    					BindingResult projectBindingResult,
     					Model model) {
-    	projectService.saveProject(projectForm);
-        return "redirect:/projects";
+    	projectValidator.validate(project, projectBindingResult);
+    	System.out.println(project.getId());
+    	if(!projectBindingResult.hasErrors() && project.getId() != null) {
+    		projectService.saveProject(project);
+            return "redirect:/projects";
+    	}
+    	return "editProject";
     }
 }

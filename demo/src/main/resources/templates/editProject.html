@@ -5,22 +5,22 @@
 <title>TaskManager</title>
 </head>
 <body>
-	<form th:action="@{/projects/edit/{projectId}}" method="POST">
+	<form th:action="@{/projects/edit}" method="POST">
 		<table>
 			<tr>
 				<td><label for="nameProjectInput"> Nome Progetto </label>
 				<td><input id=nameProjectInput type="text"
-					placeholder="PROJECT NAME" required th:field="${project.name}" /></td>
-				<td th:if="${#fields.hasErrors('project.name')}"
-					th:errors="${project.name}" th:style="'color:red'"></td>
+					placeholder="PROJECT NAME" required th:field="${projectFormEdit.name}" /></td>
+				<td th:if="${#fields.hasErrors('projectFormEdit.name')}"
+					th:errors="${projectFormEdit.name}" th:style="'color:red'"></td>
 			</tr>
 
 			<tr>
 				<td><label for="descriptionProjectInput"> Descrizione Progetto </label>
 				<td><input id=descriptionProjectInput type="text" placeholder="PROJECT DESCRIPTION"
-					required th:field="${project.description}" /></td>
-				<td th:if="${#fields.hasErrors('project.description')}"
-					th:errors="${project.description}" th:style="'color:red'"></td>
+					required th:field="${projectFormEdit.description}" /></td>
+				<td th:if="${#fields.hasErrors('projectFormEdit.description')}"
+					th:errors="${projectFormEdit.description}" th:style="'color:red'"></td>
 			</tr>
 		</table>
 		<input type="submit" value="EditProject" />
