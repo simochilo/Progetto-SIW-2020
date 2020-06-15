@@ -40,8 +40,6 @@ public class Task {
 	@ManyToOne
 	private Project project;
 	
-	
-
 	@ManyToMany
 	private List<Tag> tags;
 	
