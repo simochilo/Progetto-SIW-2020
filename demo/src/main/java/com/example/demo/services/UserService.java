@@ -39,6 +39,11 @@ public class UserService {
 	}
 	
 	@Transactional
+	public void deleteUser(User user) {
+		this.userRepository.delete(user);
+	}
+	
+	@Transactional
 	public List<User> findAllusers()  {
 		Iterable<User> i = this.userRepository.findAll();
 		ArrayList<User> lista = new ArrayList<>();

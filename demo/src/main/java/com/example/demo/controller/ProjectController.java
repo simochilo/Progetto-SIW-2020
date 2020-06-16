@@ -98,22 +98,31 @@ public class ProjectController {
 	
 	@RequestMapping(value = { "/projects/edit/{projectId}" }, method = RequestMethod.GET)
     public String showEditForm(Model model, @PathVariable Long projectId) {
-    	Project project = this.projectService.getProject(projectId);
-		model.addAttribute("projectFormEdit", project);
-		System.out.println(project.getId());
+		model.addAttribute("projectFormEdit", this.projectService.getProject(projectId));
     	return "editProject";
     }
     
-    @RequestMapping(value = { "/projects/edit" }, method = RequestMethod.POST)
-    public String edit(@Valid @ModelAttribute("projectFormEdit") Project project,
+    @RequestMapping(value = { "/projects/edit/{projectId}" }, method = RequestMethod.POST)
+    public String edit(@Valid @ModelAttribute ("projectFormEdit") Project project,
+    					@PathVariable Long projectId,
     					BindingResult projectBindingResult,
     					Model model) {
+    	
+    	Project projectRecuperato = this.projectService.getProject(projectId);
     	projectValidator.validate(project, projectBindingResult);
-    	System.out.println(project.getId());
-    	if(!projectBindingResult.hasErrors() && project.getId() != null) {
-    		projectService.saveProject(project);
+    	
+    	if(!projectBindingResult.hasErrors()) {
+    		projectRecuperato.setName(project.getName());
+    		projectRecuperato.setDescription(project.getDescription());
+    		projectService.saveProject(projectRecuperato);
             return "redirect:/projects";
     	}
     	return "editProject";
+    }
+    
+    @RequestMapping(value = { "projects/{id}/delete" }, method = RequestMethod.POST)
+    public String deleteUser(Model model, @PathVariable Long id) {
+    	this.projectService.deleteProject(this.projectService.getProject(id));
+    	return "redirect:/projects";
     }
 }

@@ -11,13 +11,19 @@
 		<table>
 			<thead>
 				<tr>
+					<th>ID</th>
 					<th>Name</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="project : ${projectsList}">
+					<td th:text="${project.id}"></td>
 					<td><a th:href="'/projects/' + ${project.id}"
-						th:text="${project.name}">Project Name </a>
+						th:text="${project.name}">Project Name </a></td>
+					<td>
+						<form th:action="@{/projects/{id}/delete(id=${project.id})}" method="POST">
+							<button type="submit" name="submit" value="value">DELETE</button>
+						</form>
 					</td>
 				</tr>
 			</tbody>

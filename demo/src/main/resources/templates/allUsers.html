@@ -23,7 +23,10 @@
 					<td th:text="${credentials.user.firstname}"></td>
 					<td th:text="${credentials.user.lastname}"></td>
 					<td>
-						<a th:href="@{delete/__${credentials.username}__}" class="btn btn-danger">Delete</a>
+						<form th:action="@{/admin/users/{username}/delete(username=${credentials.username})}" method="POST">
+							<button type="submit" name="submit" value="value">DELETE</button>
+						</form>
+						<!--  <a th:href="@{'delete/' + ${credentials.username}}" class="btn btn-danger">Delete</a> -->
 					</td>
 				</tr>
 			</tbody>

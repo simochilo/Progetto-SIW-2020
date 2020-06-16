@@ -42,6 +42,12 @@ public class CredentialsService {
 	}
 	
 	@Transactional
+	public void deleteCredentials(String username) {
+		Credentials credentials = this.credentialsRepository.findByUsername(username).get();
+		this.credentialsRepository.delete(credentials);
+	}
+	
+	@Transactional
     public List<Credentials> getAllCredentials() {
         List<Credentials> result = new ArrayList<>();
         Iterable<Credentials> iterable = this.credentialsRepository.findAll();
