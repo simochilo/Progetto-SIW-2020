@@ -8,7 +8,7 @@
 <body>
 	<h1>User</h1>
 	<div>
-		<form th:action="@{/project/${project.id}/share}"
+		<form th:action="@{'/projects/share/' + ${project.id}}"
 			method="POST">
 			<div>
 				<input id=userNameInput type="text" name="username"

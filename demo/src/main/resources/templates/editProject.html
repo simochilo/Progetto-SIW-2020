@@ -5,7 +5,7 @@
 <title>TaskManager</title>
 </head>
 <body>
-	<form th:action="@{/projects/edit}" method="POST">
+	<form th:action="@{'/projects/edit/' + ${projectId}}" method="POST">
 		<table>
 			<tr>
 				<td><label for="nameProjectInput"> Nome Progetto </label>

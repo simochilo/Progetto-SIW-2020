@@ -40,7 +40,7 @@ public class ProjectController {
 
 	@Autowired
 	private CredentialsService credentialsService;
-	
+
 	/**
 	 * Metodo che mostra i progetti posseduti dall'utente loggato
 	 * @param model
@@ -54,7 +54,7 @@ public class ProjectController {
 		model.addAttribute("projectsList", projectsList);
 		return "projects";
 	}
-	
+
 	/**
 	 * Metodo che mostra i progetti condivisi con l'utente loggato
 	 * @param model
@@ -66,6 +66,7 @@ public class ProjectController {
 		List<Project> projectsList = projectService.retrieveProjectsSharedWith(loggedUser.getId());
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("projectsList", projectsList);
+		System.out.println("DIMENSIONE LISTA --> " + projectsList.size());
 		return "sharedprojects";
 	}
 
@@ -105,7 +106,7 @@ public class ProjectController {
 		model.addAttribute("projectForm", project);
 		return "addProject";
 	}
-	
+
 	/**
 	 * Il metodo riempe i campi del progetto, lo salva nel DB e lo aggiunge
 	 * alla lista di progetti di cui è proprietario l'utente
@@ -123,7 +124,7 @@ public class ProjectController {
 		if(!projectBindingResult.hasErrors()) {
 			project.setOwner(loggedUser);
 			this.projectService.retrieveProjectsOwnedBy(loggedUser.getId()).add(project);
-			this.projectService.shareProjectWithUser(project, loggedUser);			
+			this.projectService.shareProjectWithUser(project, loggedUser);
 			this.projectService.saveProject(project);
 			return "redirect:/projects/" + project.getId();
 		}
@@ -161,20 +162,22 @@ public class ProjectController {
 		return "redirect:/projects";
 	}
 
-	@RequestMapping(value = { "projects/{id}/share" }, method = RequestMethod.GET)
-	public String showShareProjectForm(Model model) {
+	@RequestMapping(value = { "projects/share/{id}" }, method = RequestMethod.GET)
+	public String showShareProjectForm(Model model, @PathVariable Long id) {
+		model.addAttribute("loggedUser", sessionData.getLoggedUser());
+		model.addAttribute("project", this.projectService.getProject(id));
 		return "shareProject";
 	}
 
-	@RequestMapping(value = { "projects/{id}/share" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "projects/share/{id}" }, method = RequestMethod.POST)
 	public String shareProject( @RequestParam("username") String username,
-								@PathVariable Long id) {
+			@PathVariable Long id) {
 		Project project = this.projectService.getProject(id);
 		Credentials credentials = this.credentialsService.getCredentials(username);
 
 		if(credentials != null) {
 			this.projectService.shareProjectWithUser(project, credentials.getUser());
-			return "redirect:/projects" + id;    
+			return "redirect:/projects/" + id;
 		}
 		return "redirect:/home";
 	}

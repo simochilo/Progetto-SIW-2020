@@ -39,18 +39,19 @@ public class ProjectService {
 	@Transactional
 	public Project shareProjectWithUser(Project project, User user) {
 		project.addMember(user);
+		user = this.userService.addToVisibleProjects(project, user.getId());
 		return this.projectRepository.save(project);
 	}
 	
 	@Transactional
 	public List<Project> retrieveProjectsSharedWith(Long userId) {
-		User user = userService.getUser(userId);
+		User user = this.userService.getUser(userId);
 		return user.getVisibleProjects();
 	}
 
 	@Transactional
 	public List<Project> retrieveProjectsOwnedBy(Long userId) {
-		User user = userService.getUser(userId);
+		User user = this.userService.getUser(userId);
 		return user.getOwnedProjects();
 	}
 	

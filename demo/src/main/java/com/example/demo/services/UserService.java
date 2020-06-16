@@ -68,4 +68,11 @@ public class UserService {
 		}
 	}
 
+	@Transactional
+	public User addToVisibleProjects(Project project, Long id) {
+		User user = this.getUser(id);
+		user.getVisibleProjects().add(project);
+		return this.saveUser(user);
+	}
+
 }
