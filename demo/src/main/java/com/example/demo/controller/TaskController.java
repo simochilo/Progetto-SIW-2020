@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+<<<<<<< HEAD
 import com.example.demo.model.Comment;
+=======
+import com.example.demo.controller.session.SessionData;
+>>>>>>> parent of 85cd1e4... addTagToTask & addComment
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
@@ -84,6 +88,7 @@ public class TaskController {
 		return "redirect:/projects/" + projectId;
 	}
 
+<<<<<<< HEAD
 	@RequestMapping(value = { "projects/addComment/{id}"}, method = RequestMethod.GET)
 	public String addCommentForm(Model model, @PathVariable Long id) {
 		model.addAttribute("task", this.taskService.getTask(id));
@@ -103,4 +108,6 @@ public class TaskController {
 		return "redirect:/projects/" + this.taskService.getTask(id).getProject().getId();
 	}
 
+=======
+>>>>>>> parent of 85cd1e4... addTagToTask & addComment
 }

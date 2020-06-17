@@ -18,7 +18,7 @@
 	</div>
 	<h3>Tasks</h3>
 	<ul>
-		<li th:each="task : ${project.tasks}">
+		<li th:each="task : ${project.tasks}" th:if="${task.user==loggedUser}">
 			<div>
 				<div th:text="'Name: ' + ${task.name}"></div>
 				<div th:text="'Description: ' + ${task.description}"
@@ -27,6 +27,7 @@
 					style="color: gray"></div>
 				<div th:text="'Last Update: ' + ${task.lastUpdateTimestamp}"
 					style="color: gray"></div>
+<<<<<<< HEAD
 				<h5>Comments</h5>
 				<!-- <ul>
 					<li th:each="comment : ${task.comments}">
@@ -59,6 +60,15 @@
 					</form>
 				</div>
 				<div></div>
+=======
+				<div>
+					<a th:href="@{'/projects/editTask/' + ${task.id}}">Edit Task</a>
+				</div>
+				<form th:action="@{/projects/{id}/deleteTask(id=${task.id})}"
+					method="POST">
+					<button type="submit" name="submit" value="value">DELETE</button>
+				</form>
+>>>>>>> parent of 85cd1e4... addTagToTask & addComment
 			</div>
 		</li>
 	</ul>

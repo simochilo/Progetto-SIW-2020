@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.example.demo.model.Tag;
 import com.example.demo.services.ProjectService;
 import com.example.demo.services.TagService;
-import com.example.demo.services.TaskService;
 
 @Controller
 public class TagController {
@@ -21,9 +20,6 @@ public class TagController {
 	
 	@Autowired
 	private ProjectService projectService;
-	
-	@Autowired
-	private TaskService taskService;
 
 	@RequestMapping(value = { "projects/addTag/{id}" }, method = RequestMethod.GET)
 	public String addTagForm(Model model, @PathVariable Long id) {
@@ -43,22 +39,5 @@ public class TagController {
 		projectService.saveProject(projectService.getProject(id));
 		return "redirect:/projects/" + id;
 	}
-	
-	@RequestMapping(value = { "projects/addTagToTask/{id}" }, method = RequestMethod.GET)
-	public String addTagToTaskForm(Model model, @PathVariable Long id) {
-		model.addAttribute("task", this.taskService.getTask(id));
-		model.addAttribute("tag", new Tag());
-		return "addTagToTask";
-	}
 
-	@RequestMapping(value = { "projects/addTagToTask/{id}" }, method = RequestMethod.POST)
-	public String addTagToTask(@ModelAttribute("tag") Tag tag,
-			@PathVariable Long id,
-			Model model) {
-		Tag tagSalvata = tagService.saveTag(tag);
-		this.tagService.retrieveAllTasks(tagSalvata.getId()).add(this.taskService.getTask(id));
-		this.tagService.saveTag(tagSalvata);
-		this.taskService.saveTask(this.taskService.getTask(id));
-		return "redirect:/projects/" + this.taskService.getTask(id).getProject().getId();	
-	}
 }
