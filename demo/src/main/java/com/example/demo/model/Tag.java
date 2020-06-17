@@ -1,7 +1,9 @@
 package com.example.demo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,18 +30,21 @@ public class Tag {
 	@Column(nullable = false, length = 100)
 	private String description;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.REMOVE)
 	private List<Task> tasks;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	private Project project;
 	
-	public Tag() {}
+	public Tag() {
+		this.tasks = new ArrayList<>();
+	}
 
 	public Tag(String name, String color, String description) {
 		this.name = name;
 		this.colour = color;
 		this.description = description;
+		this.tasks = new ArrayList<>();
 	}
 
 	public Long getId() {

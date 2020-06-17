@@ -47,5 +47,4 @@ public class TaskService {
 		User user = this.userService.getUser(userId);
 		return user.getTasks();
 	}
-
 }

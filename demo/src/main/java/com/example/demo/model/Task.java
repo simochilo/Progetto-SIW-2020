@@ -1,15 +1,19 @@
 package com.example.demo.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -36,8 +40,11 @@ public class Task {
 
 	@Column(nullable = false)
 	private LocalDateTime lastUpdateTimestamp;
-
-	@ManyToOne
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Comment> comments;
+	
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	private Project project;
 
 	@ManyToOne
@@ -46,12 +53,22 @@ public class Task {
 	@ManyToMany(mappedBy = "tasks")
 	private List<Tag> tags;
 
-	public Task() {}
+	public Task() {
+		this.comments = new ArrayList<>();
+	}
 
 	public Task(String name, boolean completed) {
-		this();
 		this.name = name;
 		this.completed = completed;
+		this.comments = new ArrayList<>();
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 	public String getName() {

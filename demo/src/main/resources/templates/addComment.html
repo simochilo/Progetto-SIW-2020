@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head>
+<title>TaskManager</title>
+</head>
+<body>
+	<h1>Create New Comment</h1>
+	<form id="createTag"
+		th:action="@{'/projects/addComment/' + ${task.id}}"
+		th:object="${task}" method="POST">
+		<table>
+			<tr th:each="task, comment : *{task}">
+				<td><label for="taskCommentInput"> Comment </label>
+				<td><input id=taskCommentInput type="text" placeholder="COMMENT" th:field="*{task[__${comment.testo}__]}"
+					name="comment" /></td>
+				<td>
+					<button type="submit">Create</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

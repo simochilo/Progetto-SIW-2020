@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.controller.session.SessionData;
+import com.example.demo.model.Comment;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
@@ -84,5 +85,23 @@ public class TaskController {
 		this.taskService.deleteTask(taskService.getTask(id));
 		return "redirect:/projects/" + projectId;
 	}
-
+	
+	@RequestMapping(value = { "projects/addComment/{id}"}, method = RequestMethod.GET)
+	public String addCommentForm(Model model, @PathVariable Long id) {
+		model.addAttribute("task", this.taskService.getTask(id));
+		return "addComment";
+	}
+	
+	@RequestMapping(value = { "projects/addComment/{id}"}, method = RequestMethod.POST)
+	public String addComment(@ModelAttribute ("task") Task task,
+			@PathVariable Long id,
+			@RequestParam("comment") Comment comment,
+			Model model) {
+		Task taskRecuperata = this.taskService.saveTask(task);
+		taskRecuperata.getComments().add(comment);
+		this.taskService.saveTask(taskRecuperata);
+		
+		return "redirect:/projects/" + this.taskService.getTask(id).getProject().getId();
+	}
+	
 }
