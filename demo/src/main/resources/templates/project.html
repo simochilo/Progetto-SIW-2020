@@ -27,6 +27,7 @@
 					style="color: gray"></div>
 				<div th:text="'Last Update: ' + ${task.lastUpdateTimestamp}"
 					style="color: gray"></div>
+
 				<h5>Tags</h5>
 				<ul>
 					<li th:each="tag : ${task.tags}">
