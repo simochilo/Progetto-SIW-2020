@@ -28,8 +28,8 @@ public class Tag {
 	@Column(nullable = false, length = 100)
 	private String description;
 	
-	@ManyToMany
-	private List<Task> tasks;
+	@ManyToOne
+	private Task task;
 	
 	@ManyToOne
 	private Project project;
@@ -82,12 +82,12 @@ public class Tag {
 		this.description = description;
 	}
 	
-	public List<Task> getTasks() {
-		return tasks;
+	public Task getTask() {
+		return task;
 	}
 
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
+	public void setTask(Task task) {
+		this.task = task;
 	}
 
 	@Override
