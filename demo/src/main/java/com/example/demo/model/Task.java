@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -43,15 +45,17 @@ public class Task {
 	@ManyToOne
 	private User user;
 
-	@ManyToMany(mappedBy = "tasks")
+	@OneToMany(mappedBy = "task")
 	private List<Tag> tags;
 
-	public Task() {}
+	public Task() {
+		this.tags = new ArrayList<>();
+	}
 
 	public Task(String name, boolean completed) {
-		this();
 		this.name = name;
 		this.completed = completed;
+		this.tags = new ArrayList<>();
 	}
 
 	public String getName() {
