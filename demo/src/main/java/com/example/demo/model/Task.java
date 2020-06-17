@@ -17,32 +17,35 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tasks")
 public class Task {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@Column(nullable = false, length = 100)
 	private String name;
-	
+
 	@Column
 	private String description;
-	
+
 	@Column(nullable = false)
 	private boolean completed;
-	
+
 	@Column(updatable = false, nullable = false)
 	private LocalDateTime creationTimestamp;
-	
+
 	@Column(nullable = false)
 	private LocalDateTime lastUpdateTimestamp;
-	
+
 	@ManyToOne
 	private Project project;
-	
-	@ManyToMany
+
+	@ManyToOne
+	private User user;
+
+	@ManyToMany(mappedBy = "tasks")
 	private List<Tag> tags;
-	
+
 	public Task() {}
 
 	public Task(String name, boolean completed) {
@@ -98,18 +101,18 @@ public class Task {
 	public void setLastUpdateTimestamp(LocalDateTime lastUpdateTimestamp) {
 		this.lastUpdateTimestamp = lastUpdateTimestamp;
 	}
-	
+
 	@PrePersist
 	protected void onPersist() {
 		this.creationTimestamp = LocalDateTime.now();
 		this.lastUpdateTimestamp = LocalDateTime.now();
 	}
-	
+
 	@PreUpdate
 	protected void onUpdate() {
 		this.lastUpdateTimestamp = LocalDateTime.now();
 	}
-	
+
 	public List<Tag> getTags() {
 		return tags;
 	}
@@ -117,7 +120,7 @@ public class Task {
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
-	
+
 	public Project getProject() {
 		return project;
 	}
@@ -125,7 +128,15 @@ public class Task {
 	public void setProject(Project project) {
 		this.project = project;
 	}
-	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public void addTag(Tag tag) {
 		this.tags.add(tag);
 	}

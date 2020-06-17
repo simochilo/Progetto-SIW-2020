@@ -8,13 +8,13 @@
 	<form th:action="@{'/projects/editTask/' + ${task.id}}" method="POST">
 		<table>
 			<tr>
-				<td><label for="taskNameInput"> Nome Task </label>
+				<td><label for="taskNameInput"> Task Name </label>
 				<td><input id=taskNameInput type="text"
 					placeholder="TASK NAME" required th:field="${task.name}" /></td>
 			</tr>
 
 			<tr>
-				<td><label for="taskDescriptionInput"> Descrizione Task </label>
+				<td><label for="taskDescriptionInput"> Task Description </label>
 				<td><input id=taskDescriptionInput type="text" placeholder="TASK DESCRIPTION"
 					required th:field="${task.description}" /></td>
 			</tr>

@@ -33,14 +33,14 @@ public class CredentialsValidator implements Validator {
 		if(username.isEmpty())
 			errors.rejectValue("username", "required");
 		else if(username.length() < MIN_USERNAME_LENGTH || username.length() > MAX_USERNAME_LENGTH)
-			errors.rejectValue("username", "size");
+			errors.rejectValue("username", "size", "Inserire username compreso tra 4 e 20 caratteri");
 		else if(this.credentialsService.getCredentials(username) != null)
-			errors.rejectValue("username", "duplicate");
+			errors.rejectValue("username", "duplicate", "Questo username è già in uso");
 		
 		if(password.isEmpty())
 			errors.rejectValue("password", "required");
 		else if(password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH)
-			errors.rejectValue("password", "size");
+			errors.rejectValue("password", "size", "Inserire password compresa tra 6 e 20 caratteri");
 		
 	}
 }

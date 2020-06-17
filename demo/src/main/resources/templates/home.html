@@ -6,23 +6,24 @@
 <title>TaskManager</title>
 </head>
 <body>
-	<div class="home-div">
-		<h1 th:text="'Welcome, ' + ${user.firstname} + '!'"></h1>
-		<h4>
-			<a href="/projects">My Projects</a>
-		</h4>
-		<h4>
-			<a href="/sharedProjects">Shared with me</a>
-		</h4>
-		<h4>
-			<a href="/projects/add">Create new Project</a>
-		</h4>
-		<h4>
-			<a href="/users/me">Profile</a>
-		</h4>
-		<h4>
-			<a href="/logout">Logout</a>
-		</h4>
-	</div>
+	<h1 th:text="'Welcome, ' + ${user.firstname} + '!'"></h1>
+	<h4>
+		<a href="/projects">My Projects</a>
+	</h4>
+	<h4>
+		<a href="/sharedProjects">Shared with me</a>
+	</h4>
+	<h4>
+		<a href="/projects/add">Create new Project</a>
+	</h4>
+	<h4>
+		<a href="/users/me">Profile</a>
+	</h4>
+	<h4 th:if="${user.firstname=='admin'}">
+		<a href="/admin">Admin</a>
+	</h4>
+	<h4>
+		<a href="/logout">Logout</a>
+	</h4>
 </body>
 </html>

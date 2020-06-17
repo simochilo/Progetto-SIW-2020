@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,7 +23,7 @@ public class Tag {
 	private String name;
 	
 	@Column(nullable = false, length = 100)
-	private String color;
+	private String colour;
 	
 	@Column(nullable = false, length = 100)
 	private String description;
@@ -30,11 +31,14 @@ public class Tag {
 	@ManyToMany
 	private List<Task> tasks;
 	
+	@ManyToOne
+	private Project project;
+	
 	public Tag() {}
 
 	public Tag(String name, String color, String description) {
 		this.name = name;
-		this.color = color;
+		this.colour = color;
 		this.description = description;
 	}
 
@@ -54,12 +58,20 @@ public class Tag {
 		this.name = name;
 	}
 
-	public String getColor() {
-		return color;
+	public String getColour() {
+		return colour;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
+	public void setColour(String color) {
+		this.colour = color;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	public String getDescription() {
@@ -82,7 +94,7 @@ public class Tag {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((color == null) ? 0 : color.hashCode());
+		result = prime * result + ((colour == null) ? 0 : colour.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
@@ -97,10 +109,10 @@ public class Tag {
 		if (getClass() != obj.getClass())
 			return false;
 		Tag other = (Tag) obj;
-		if (color == null) {
-			if (other.color != null)
+		if (colour == null) {
+			if (other.colour != null)
 				return false;
-		} else if (!color.equals(other.color))
+		} else if (!colour.equals(other.colour))
 			return false;
 		if (description == null) {
 			if (other.description != null)
