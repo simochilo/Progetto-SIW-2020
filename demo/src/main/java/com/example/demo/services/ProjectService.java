@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +54,15 @@ public class ProjectService {
 	public List<Project> retrieveProjectsOwnedBy(Long userId) {
 		User user = this.userService.getUser(userId);
 		return user.getOwnedProjects();
+	}
+	
+	@Transactional
+	public List<Project> getAllProjects() {
+		List<Project> result = new ArrayList<>();
+		Iterable<Project> iterable = this.projectRepository.findAll();
+		for(Project project : iterable)
+			result.add(project);
+		return result;
 	}
 	
 }

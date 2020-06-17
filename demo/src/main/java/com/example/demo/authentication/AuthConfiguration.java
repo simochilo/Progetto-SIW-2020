@@ -31,8 +31,8 @@ public class AuthConfiguration extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers(HttpMethod.GET, "/", "/index", "/login", "/users/register").permitAll()	// these paths can be accessed by anyone
 				.antMatchers(HttpMethod.POST, "/login", "/users/register").permitAll()
-				.antMatchers(HttpMethod.GET, "admin/**").hasAnyAuthority(ADMIN_ROLE) 		// the path admin/** is accessible only by an user with ADMIN_ROLE
-				.antMatchers(HttpMethod.POST, "admin/**").hasAnyAuthority(ADMIN_ROLE) 
+				.antMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE) 		// the path admin/** is accessible only by an user with ADMIN_ROLE
+				.antMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE) 
 				.anyRequest().authenticated()		// URLs are allowed by any authenticated user
 				.and().formLogin()
 				.defaultSuccessUrl("/home")

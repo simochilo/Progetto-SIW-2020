@@ -19,7 +19,13 @@
 				<td><label for="taskDescriptionInput"> Task Description
 				</label>
 				<td><input id=taskDescriptionInput type="text"
-					placeholder="DESCRIPTION" required th:field="*{description}" /></td>
+					placeholder="DESCRIPTION" th:field="*{description}" /></td>
+			</tr>
+			<tr>
+				<td><label for="assignedUserInput"> Assigned User
+				</label>
+				<td><input id=userNameInput type="text" name="username"
+					placeholder="USERNAME"></td>
 			</tr>
 			<tr>
 				<td>

@@ -38,6 +38,12 @@ public class Credentials {
 	public Credentials() {
 		this.creationDate = LocalDateTime.now();
 	}
+	
+	public Credentials(String username, String password) {
+		this.username = username;
+		this.password = password;
+		this.creationDate = LocalDateTime.now();
+	}
 
 	public LocalDateTime getCreationDate() {
 		return creationDate;

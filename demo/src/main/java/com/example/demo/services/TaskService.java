@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.Task;
+import com.example.demo.model.User;
 import com.example.demo.repository.TaskRepository;
 
 @Service
@@ -14,6 +16,9 @@ public class TaskService {
 	
 	@Autowired
 	private TaskRepository taskRepository;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Transactional
 	public Task getTask(Long id) {
@@ -35,6 +40,12 @@ public class TaskService {
 	public Task setCompleted(Task task) {
 		task.setCompleted(true);
 		return this.taskRepository.save(task);
+	}
+	
+	@Transactional
+	public List<Task> retrieveTasksAssignedTo(Long userId) {
+		User user = this.userService.getUser(userId);
+		return user.getTasks();
 	}
 
 }

@@ -17,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.controller.session.SessionData;
 import com.example.demo.model.Credentials;
 import com.example.demo.model.Project;
-import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.services.CredentialsService;
 import com.example.demo.services.ProjectService;
-import com.example.demo.services.TaskService;
 import com.example.demo.services.UserService;
+import com.example.demo.validator.CredentialsValidator;
 import com.example.demo.validator.ProjectValidator;
 
 @Controller
@@ -42,9 +41,7 @@ public class ProjectController {
 
 	@Autowired
 	private CredentialsService credentialsService;
-	
-	@Autowired
-	private TaskService taskService;
+
 
 	/**
 	 * Metodo che mostra i progetti posseduti dall'utente loggato
@@ -81,7 +78,7 @@ public class ProjectController {
 	 * @return il metodo reindirizza alla pagina di presentazione del progetto
 	 */
 	@RequestMapping(value = { "/projects/{projectId}" }, method = RequestMethod.GET)
-	public String project(Model model, @PathVariable Long projectId) {
+	public String showProject(Model model, @PathVariable Long projectId) {
 		User loggedUser = sessionData.getLoggedUser();
 		Project project = projectService.getProject(projectId);
 		if(project == null)
@@ -178,32 +175,26 @@ public class ProjectController {
 			@PathVariable Long id) {
 		Project project = this.projectService.getProject(id);
 		Credentials credentials = this.credentialsService.getCredentials(username);
+		
 
-		if(credentials != null) {
+		if(credentialsService.getAllCredentials().contains(credentials)) {
 			this.projectService.shareProjectWithUser(project, credentials.getUser());
 			return "redirect:/projects/" + id;
 		}
-		return "redirect:/home";
+		return "redirect:/projects/share/" + id;
 	}
 	
+	@RequestMapping(value =  { "/admin/projects" } , method = RequestMethod.GET)
+    public String projectList(Model model) {
+    	List<Project> projectList = this.projectService.getAllProjects();
+    	model.addAttribute("projectList", projectList);
+    	return "allProjects";
+    }
 	
-	@RequestMapping(value = { "projects/addTask/{id}" }, method = RequestMethod.GET)
-	public String addTaskForm(Model model, @PathVariable Long id) {
-		model.addAttribute("project", this.projectService.getProject(id));
-		model.addAttribute("task", new Task());
-		return "addTask";
+	@RequestMapping(value = { "/admin/projects/{id}/delete" }, method = RequestMethod.POST)
+	public String deleteProjectByAdmin(Model model, @PathVariable Long id) {
+		this.projectService.deleteProject(this.projectService.getProject(id));
+		return "redirect:/admin/projects";
 	}
-	
-	@RequestMapping(value = { "projects/addTask/{id}" }, method = RequestMethod.POST)
-	public String addTask(@PathVariable Long id,
-						  @ModelAttribute("task") Task task,
-						  Model model) {
-		Project project = this.projectService.getProject(id);
-		Task taskSalvata = this.taskService.saveTask(task);
-		this.taskService.getTask(taskSalvata.getId()).setProject(project);
-		project.getTasks().add(taskSalvata);
-		this.projectService.saveProject(project);
-		return "redirect:/projects/" + project.getId();
-	}
-	
+
 }

@@ -43,8 +43,7 @@ public class Project {
 	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "project")
 	private List<Task> tasks;
 	
-	@OneToMany(cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "project_id")
+	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
 	private List<Tag> tags;
 	
 	public Project() {

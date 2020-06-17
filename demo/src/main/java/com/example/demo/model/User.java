@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +32,9 @@ public class User {
 
 	@ManyToMany(mappedBy = "members")
 	private List<Project> visibleProjects;
+
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
+	private List<Task> tasks;
 
 	public User() {
 		this.ownedProjects = new ArrayList<Project>();
@@ -84,6 +86,14 @@ public class User {
 
 	public void setVisibleProjects(List<Project> visibleProjects) {
 		this.visibleProjects = visibleProjects;
+	}
+
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 	@Override
