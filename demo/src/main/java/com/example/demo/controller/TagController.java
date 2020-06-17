@@ -45,21 +45,21 @@ public class TagController {
 	}
 	
 	@RequestMapping(value = { "projects/addTagToTask/{id}" }, method = RequestMethod.GET)
-	public String addTagToTaskForm(Model model, @PathVariable Long id) {
-		model.addAttribute("task", this.taskService.getTask(id));
-		model.addAttribute("tag", new Tag());
-		return "addTagToTask";
-	}
+    public String addTagToTaskForm(Model model, @PathVariable Long id) {
+        model.addAttribute("task", this.taskService.getTask(id));
+        model.addAttribute("tag", new Tag());
+        return "addTagToTask";
+    }
 
-	@RequestMapping(value = { "projects/addTagToTask/{id}" }, method = RequestMethod.POST)
-	public String addTagToTask(@ModelAttribute("tag") Tag tag,
-			@PathVariable Long id,
-			Model model) {
-		Tag tagSalvata = tagService.saveTag(tag);
-		tagSalvata.setTask(this.taskService.getTask(id));
-		this.tagService.saveTag(tagSalvata);
-		this.taskService.saveTask(this.taskService.getTask(id));
-		return "redirect:/projects/" + this.taskService.getTask(id).getProject().getId();	
-	}
+    @RequestMapping(value = { "projects/addTagToTask/{id}" }, method = RequestMethod.POST)
+    public String addTagToTask(@ModelAttribute("tag") Tag tag,
+            @PathVariable Long id,
+            Model model) {
+        Tag tagSalvata = tagService.saveTag(tag);
+        tagSalvata.setTask(this.taskService.getTask(id));
+        this.tagService.saveTag(tagSalvata);
+        this.taskService.saveTask(this.taskService.getTask(id));
+        return "redirect:/projects/" + this.taskService.getTask(id).getProject().getId();
+    }
 
 }

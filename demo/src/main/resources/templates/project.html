@@ -18,7 +18,7 @@
 	</div>
 	<h3>Tasks</h3>
 	<ul>
-		<li th:each="task : ${project.tasks}">
+		<li th:each="task : ${project.tasks}" th:if="${task.user==loggedUser}">
 			<div>
 				<div th:text="'Name: ' + ${task.name}"></div>
 				<div th:text="'Description: ' + ${task.description}"
@@ -27,7 +27,6 @@
 					style="color: gray"></div>
 				<div th:text="'Last Update: ' + ${task.lastUpdateTimestamp}"
 					style="color: gray"></div>
-
 				<h5>Tags</h5>
 				<ul>
 					<li th:each="tag : ${task.tags}">
@@ -50,7 +49,6 @@
 						<button type="submit" name="submit" value="value">DELETE</button>
 					</form>
 				</div>
-				<div></div>
 			</div>
 		</li>
 	</ul>

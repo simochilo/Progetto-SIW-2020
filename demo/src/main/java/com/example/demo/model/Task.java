@@ -1,9 +1,9 @@
 package com.example.demo.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,17 +45,15 @@ public class Task {
 	@ManyToOne
 	private User user;
 
-	@OneToMany(mappedBy = "task")
+	@OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
 	private List<Tag> tags;
 
-	public Task() {
-		this.tags = new ArrayList<>();
-	}
+	public Task() {}
 
 	public Task(String name, boolean completed) {
+		this();
 		this.name = name;
 		this.completed = completed;
-		this.tags = new ArrayList<>();
 	}
 
 	public String getName() {

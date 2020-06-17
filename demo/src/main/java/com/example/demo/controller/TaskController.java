@@ -9,39 +9,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.controller.session.SessionData;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.services.CredentialsService;
 import com.example.demo.services.ProjectService;
 import com.example.demo.services.TaskService;
-import com.example.demo.services.UserService;
 
 @Controller
 public class TaskController {
 
 	@Autowired
 	private TaskService taskService;
-	
+
 	@Autowired
 	private ProjectService projectService;
-	
+
 	@Autowired
 	private CredentialsService credentialsService;
-	
+
 	@RequestMapping(value = { "projects/addTask/{id}" }, method = RequestMethod.GET)
 	public String addTaskForm(Model model, @PathVariable Long id) {
 		model.addAttribute("project", this.projectService.getProject(id));
 		model.addAttribute("task", new Task());
 		return "addTask";
 	}
-	
+
 	@RequestMapping(value = { "projects/addTask/{id}" }, method = RequestMethod.POST)
 	public String addTask(@PathVariable Long id,
-						  @ModelAttribute("task") Task task,
-						  @RequestParam("username") String username,
-						  Model model) {
+			@ModelAttribute("task") Task task,
+			@RequestParam("username") String username,
+			Model model) {
 		Project project = this.projectService.getProject(id);
 		if(credentialsService.getCredentials(username) == null) {
 			return "redirect:/projects/addTask/" + id;
@@ -77,7 +75,7 @@ public class TaskController {
 
 		return "redirect:/projects/" + taskRecuperata.getProject().getId();
 	}
-	
+
 	@RequestMapping(value = { "projects/{id}/deleteTask" }, method = RequestMethod.POST)
 	public String deleteTask(Model model, @PathVariable Long id) {
 		Long projectId = taskService.getTask(id).getProject().getId();

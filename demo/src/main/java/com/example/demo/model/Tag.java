@@ -82,7 +82,7 @@ public class Tag {
 		this.description = description;
 	}
 	
-	public Task getTask() {
+	public Task getTasks() {
 		return task;
 	}
 

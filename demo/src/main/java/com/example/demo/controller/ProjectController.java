@@ -21,7 +21,6 @@ import com.example.demo.model.User;
 import com.example.demo.services.CredentialsService;
 import com.example.demo.services.ProjectService;
 import com.example.demo.services.UserService;
-import com.example.demo.validator.CredentialsValidator;
 import com.example.demo.validator.ProjectValidator;
 
 @Controller
