@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.controller.session.SessionData;
 import com.example.demo.model.Credentials;
 import com.example.demo.model.Project;
+import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.services.CredentialsService;
 import com.example.demo.services.ProjectService;
+import com.example.demo.services.TaskService;
 import com.example.demo.services.UserService;
 import com.example.demo.validator.ProjectValidator;
 
@@ -40,6 +42,9 @@ public class ProjectController {
 
 	@Autowired
 	private CredentialsService credentialsService;
+	
+	@Autowired
+	private TaskService taskService;
 
 	/**
 	 * Metodo che mostra i progetti posseduti dall'utente loggato
@@ -66,7 +71,6 @@ public class ProjectController {
 		List<Project> projectsList = projectService.retrieveProjectsSharedWith(loggedUser.getId());
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("projectsList", projectsList);
-		System.out.println("DIMENSIONE LISTA --> " + projectsList.size());
 		return "sharedprojects";
 	}
 
@@ -157,7 +161,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = { "projects/{id}/delete" }, method = RequestMethod.POST)
-	public String deleteUser(Model model, @PathVariable Long id) {
+	public String deleteProject(Model model, @PathVariable Long id) {
 		this.projectService.deleteProject(this.projectService.getProject(id));
 		return "redirect:/projects";
 	}
@@ -181,4 +185,25 @@ public class ProjectController {
 		}
 		return "redirect:/home";
 	}
+	
+	
+	@RequestMapping(value = { "projects/addTask/{id}" }, method = RequestMethod.GET)
+	public String addTaskForm(Model model, @PathVariable Long id) {
+		model.addAttribute("project", this.projectService.getProject(id));
+		model.addAttribute("task", new Task());
+		return "addTask";
+	}
+	
+	@RequestMapping(value = { "projects/addTask/{id}" }, method = RequestMethod.POST)
+	public String addTask(@PathVariable Long id,
+						  @ModelAttribute("task") Task task,
+						  Model model) {
+		Project project = this.projectService.getProject(id);
+		Task taskSalvata = this.taskService.saveTask(task);
+		this.taskService.getTask(taskSalvata.getId()).setProject(project);
+		project.getTasks().add(taskSalvata);
+		this.projectService.saveProject(project);
+		return "redirect:/projects/" + project.getId();
+	}
+	
 }

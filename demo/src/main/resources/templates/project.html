@@ -21,6 +21,13 @@
 		<li th:each="task : ${project.tasks}">
 			<div th:text="${task.name}"></div>
 			<div th:text="${task.description}" style="color: gray"></div>
+			<div>
+				<a th:href="@{'/projects/editTask/' + ${task.id}}">Edit Task</a>
+			</div>
+			<form th:action="@{/projects/{id}/deleteTask(id=${task.id})}"
+				method="POST">
+				<button type="submit" name="submit" value="value">DELETE</button>
+			</form>
 		</li>
 	</ul>
 
@@ -28,8 +35,10 @@
 		<a th:href="@{'/projects/edit/' + ${project.id}}">Edit Project</a>
 	</h4>
 	<h4>
-		<a th:href="@{'/projects/share/' + ${project.id}}">Share
-			Project</a>
+		<a th:href="@{'/projects/share/' + ${project.id}}">Share Project</a>
+	</h4>
+	<h4>
+		<a th:href="@{'/projects/addTask/' + ${project.id}}">Add Task</a>
 	</h4>
 </body>
 </html>
