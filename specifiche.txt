@@ -5,7 +5,7 @@ Casi d'uso User
 	gestisce la richiesta HTTP validando la form e associa l'user creato alle sue credenziali per il login
 
 --> Autenticazione:
-	L'utente è reindirizzato alla form Login di default di Spring dove insersce il proprio username e password
+	L'utente è reindirizzato alla form Login di default di Spring dove inserisce il proprio username e la password
 	con cui si è registrato nel Signup.
 
 --> Visualizzare il mio profilo:
@@ -15,7 +15,7 @@ Casi d'uso User
 
 --> Aggiornare il mio profilo:
 	L'utente loggato, che sta visualizzando il proprio profilo, manda una richiesta al sistema di
-	poter modificare il proprio profilo. Il controller restituisce la form dove l'utente riempiràè i campi
+	poter modificare il proprio profilo. Il controller restituisce la form dove l'utente riempirà i campi
 	che vuole modificare. Successivamente l'utente invia la form e il controller valida la form aggiornando
 	i campi dell'utente.
 
@@ -34,7 +34,7 @@ Pre condizioni: L'utente è loggato e sta visualizzando la pagina Home
 
 --> Visualizzare i progetti condivisi con me:
 	L'utente richiede al sistema la lista dei progetti condivisi con lui da altri utenti. Il controller restituisce
-	una pagina con l'elenco dei progetti associati alla lista di progetti condivisi con l'utente.
+	una pagina con l'elenco dei progetti che gli sono visibili, cioè quelli condivisi.
 
 --> Aggiornare i dati di un mio progetto:
 	L'utente richiede al sistema la pagina relativa ad un progetto e successivamente di poterla modificare. Il sistema
