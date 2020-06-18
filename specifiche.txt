@@ -1,0 +1,82 @@
+Casi d'uso User
+
+--> Signup:
+	L'utente usa la form per registrarsi inserendo username, password, firstname e lastname. Il controller
+	gestisce la richiesta HTTP validando la form e associa l'user creato alle sue credenziali per il login
+
+--> Autenticazione:
+	L'utente è reindirizzato alla form Login di default di Spring dove insersce il proprio username e password
+	con cui si è registrato nel Signup.
+
+--> Visualizzare il mio profilo:
+	L'utente, dalla home, richiede di visualizzare il proprio profilo. Il controller restituisce
+	la vista alla pagina contenente Username, Firstname, Lastname, Role e data di registrazione
+	dell'utente.
+
+--> Aggiornare il mio profilo:
+	L'utente loggato, che sta visualizzando il proprio profilo, manda una richiesta al sistema di
+	poter modificare il proprio profilo. Il controller restituisce la form dove l'utente riempiràè i campi
+	che vuole modificare. Successivamente l'utente invia la form e il controller valida la form aggiornando
+	i campi dell'utente.
+
+Casi d'uso Project
+
+Pre condizioni: L'utente è loggato e sta visualizzando la pagina Home
+
+--> Creare un nuovo progetto:
+	L'utente richiede al sistema la pagina di creazione di un progetto, il controller restituisce la form con
+	i campi Nome e Descrizione. L'utente compila la form e la invia, il sistema valida i campi compilati
+	e crea in maniera persistente un progetto cui assegna un id e lo aggiunge alle liste dell'utente.
+
+--> Visualizzare i miei progetti:
+	L'utente richiede al sistema la lista dei propri progetti di cui è proprietario. Il controller restituisce
+	una pagina con l'elenco dei progetti associati all'utente.
+
+--> Visualizzare i progetti condivisi con me:
+	L'utente richiede al sistema la lista dei progetti condivisi con lui da altri utenti. Il controller restituisce
+	una pagina con l'elenco dei progetti associati alla lista di progetti condivisi con l'utente.
+
+--> Aggiornare i dati di un mio progetto:
+	L'utente richiede al sistema la pagina relativa ad un progetto e successivamente di poterla modificare. Il sistema
+	restituisce una form con i campi Nome e Descrizione del progetto da modificare. L'utente invia la form che il controller
+	valida, aggiorna i dati del progetto e reindirizza l'utente alla pagina del progetto.
+
+--> Cancellare un mio progetto:
+	L'utente sta visualizzando la pagina di un proprio progetto e ne richiede la sua cancellazione. Il sistema recupera dal DB
+	il progetto e lo rimuove.
+
+--> Condividere un mio progetto con un altro utente:
+	L'utente sta visualizzando la pagina di un proprio progetto e richiede di poterlo condividere con un altro utente.
+	Il sistema restituisce una form con un campo username da compilare con il nome dell'utente con cui si vuole condividere
+	il progetto. Il sistema successivamente convalida la form e aggiunge il progetto alla lista di progetti visibili 
+	dell'utente inserito.
+
+--> Aggiungere un tag ad un mio progetto:
+	L'utente sta visualizzando la pagina di un proprio progetto e richiede di poter aggiungere un tag. Il sistema
+	restituisce una form con i campi nome, descrizione e colore del tag da associare al progetto. Il sistema convalida
+	la form, crea il tag e lo aggiunge alla lista di tag del progetto.
+
+Casi d'uso Task
+
+--> Aggiungere un nuovo Task a un mio progetto:
+	L'utente sta visualizzando la pagina di un proprio progetto e richiede di poter aggiungere un task al progetto.
+	Il sistema restituisce una form con i campi Nome, descrizione e username dell'utente a cui assegnare la task. Successivamente
+	il sistema valida la form, crea la task e la associa alla lista di task del progetto e la rende
+	 visibile all'utente cui viene assegnata.
+
+--> Aggiornare un Task di un mio progetto:
+	L'utente sta visualizzando la pagina di un proprio progetto e richiede la modifica di un task esistente. Il sistema
+	restituisce una form con i campi Nome e Descrizione della task da modificare. L'utente invia la form che il controller
+	valida, aggiorna i dati della task e reindirizza l'utente alla pagina del progetto.
+
+--> Cancellare un Task da un mio progetto:
+	L'utente sta visualizzando la pagina di un proprio progetto e richiede la cancellazione di un task. Il sistema recupera
+	l'id della task da eliminare e la rimuove dalla lista del progetto.
+
+--> Assegnare un Task di un mio progetto ad un utente che ha visibilità sul mio progetto:
+	Questo caso è risolto alla creazione della Task.
+
+--> Aggiungere un Tag ad un task di un mio progetto:
+	L'utente sta visualizzando la pagina di un proprio progetto e richiede di poter aggiungere un tag ad una task. Il sistema
+	restituisce una form con i campi nome, descrizione e colore del tag da associare alla task. Il sistema convalida
+	la form, crea il tag e lo aggiunge alla lista di tag della task.
