@@ -3,10 +3,13 @@
 	xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="../static/style.css">
 <title>TaskManager</title>
 </head>
 <body>
+<div class="index-div">
 	<h1 th:text="'Welcome, ' + ${user.firstname} + '!'"></h1>
+	<br>
 	<h4>
 		<a href="/projects">My Projects</a>
 	</h4>
@@ -25,5 +28,6 @@
 	<h4>
 		<a href="/logout">Logout</a>
 	</h4>
+</div>
 </body>
 </html>
