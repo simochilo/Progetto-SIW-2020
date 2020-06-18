@@ -29,13 +29,12 @@ public class AuthConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.authorizeRequests()
-				.antMatchers(HttpMethod.GET, "/", "/index", "/login", "/users/register", "/css/**").permitAll()	// these paths can be accessed by anyone
+				.antMatchers(HttpMethod.GET, "/", "/index", "/login", "/users/register").permitAll()	// these paths can be accessed by anyone
 				.antMatchers(HttpMethod.POST, "/login", "/users/register").permitAll()
 				.antMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE) 		// the path admin/** is accessible only by an user with ADMIN_ROLE
 				.antMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE) 
 				.anyRequest().authenticated()		// URLs are allowed by any authenticated user
 				.and().formLogin()
-				.successHandler((request, response, authentication) -> response.sendRedirect("/"))
 				.defaultSuccessUrl("/home")
 				.and().logout()
 				.logoutUrl("/logout")
